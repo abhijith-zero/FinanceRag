@@ -4,6 +4,7 @@ import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvi
 import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -19,8 +20,8 @@ public class ChatController {
     }
     
     @GetMapping("/chat")
-    public String chat() {
-        return chatClient.prompt().user("How did the federal reserve's recent policy decision impact various asset classes according to the analysis?").call().content();
+    public String chat(@RequestParam String question) {
+        return chatClient.prompt().user(question).call().content();
     }
     
 }
