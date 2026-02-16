@@ -11,6 +11,7 @@ A Spring Boot application demonstrating **Retrieval-Augmented Generation (RAG)**
 ## 🎯 Overview
 
 **FinanceRag** enables intelligent document querying by combining:
+
 - **PDF document ingestion** with automatic text extraction
 - **Vector embeddings** for semantic search
 - **PostgreSQL + pgvector** for efficient vector storage
@@ -138,6 +139,7 @@ mvn spring-boot:run
 ```
 
 The application will:
+
 1. ✅ Start the Spring Boot server
 2. ✅ Connect to PostgreSQL
 3. ✅ Read PDFs from the `docs/` folder
@@ -163,9 +165,9 @@ curl "http://localhost:8080/chat?question=How%20did%20the%20federal%20reserve%20
 #### Example Response
 
 ```
-Based on the analyzed documents, the Federal Reserve's recent policy decision 
-had varied impacts across asset classes. Equities showed resilience with tech 
-stocks outperforming, while fixed income markets experienced yield compression. 
+Based on the analyzed documents, the Federal Reserve's recent policy decision
+had varied impacts across asset classes. Equities showed resilience with tech
+stocks outperforming, while fixed income markets experienced yield compression.
 Real estate investment trusts benefited from the lower rate environment...
 ```
 
@@ -190,6 +192,7 @@ TokenTextSplitter splitter = new TokenTextSplitter(800, 400, 5, 10000, true);
 ```
 
 Parameters:
+
 - `defaultChunkSize`: 800 tokens per chunk
 - `minChunkSizeChars`: Minimum 400 characters
 - `minChunkLengthToEmbed`: Skip chunks smaller than 5 tokens
@@ -231,8 +234,6 @@ FinanceRag/
 └── README.md
 ```
 
-
-
 ## 🧪 Testing
 
 ### Manual Testing
@@ -266,30 +267,27 @@ SELECT id, content, metadata FROM vector_store LIMIT 5;
 ### Common Issues
 
 **1. pgvector extension not found**
+
 ```
 ERROR: extension "vector" does not exist
 ```
+
 **Solution:** Install pgvector following the [official guide](https://github.com/pgvector/pgvector#installation)
 
 **2. Connection refused to LM Studio**
+
 ```
 Connection refused: http://localhost:1234
 ```
-**Solution:** 
+
+**Solution:**
+
 - Ensure LM Studio is running
 - Check that the server is listening on port 1234
 - Verify the base URL in `application.properties`
 
-**3. Out of memory during PDF processing**
-```
-java.lang.OutOfMemoryError: Java heap space
-```
-**Solution:** Increase heap size:
-```bash
-mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Xmx4g"
-```
-
 **4. No documents ingested**
+
 - Verify PDFs exist in `src/main/resources/docs/`
 - Check application logs for ingestion errors
 - Ensure PDFs are not encrypted or password-protected
